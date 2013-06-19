@@ -157,7 +157,7 @@ var inpoot = {};
 
     //this just returns the raw gamepad objects
     var getRawPads = function () {
-        return navigator.webkitGamepads || navigator.mozGamepads || navigator.gamepads;
+        return navigator.webkitGetGamepads && navigator.webkitGetGamepads() || navigator.mozGamepads || navigator.gamepads;
     };
 
     //this is used if you want to return an array of active gamepads (somewhat filtered with added attributes)
