@@ -3,7 +3,7 @@ module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
-    pkg: '<json:package.json>',
+    pkg: grunt.file.readJSON('package.json'),
     jshint: {
 	  files: ['inpoot.js', 'lib/resources/*.js'],
       options: {
@@ -33,8 +33,8 @@ module.exports = function(grunt) {
 		options: {
 		  // the banner is inserted at the top of the output
 		  banner: '/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - ' +
-          '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
-          '<%= pkg.homepage ? "* " + pkg.homepage + "\n" : "" %>' +
+          '<%= grunt.template.today("yyyy-mm-dd") %>\\n' +
+          '<%= pkg.homepage ? "* " + pkg.homepage + "\\n" : "" %>' +
           '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
           ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */'
 	    },
