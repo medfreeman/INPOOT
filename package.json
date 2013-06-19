@@ -37,5 +37,11 @@
     "name": "John David Martin",
     "email": "johndavidfive@gmail.com",
     "web": "http://johndavidfive.com/"
-  }
+  },
+  "contributors": [ 
+    {
+      "name": "Mehdi Lahlou",
+      "email": "mehdi.lahlou@free.fr"
+    } 
+  ],
 }
