@@ -21,7 +21,7 @@ var inpoot = {};
 
     /*======== SOME CROSS BROWSER LOGIC FROM GAMEPAD.JS ========*/
 
-    var contains = function(lookIn, forWhat) { return lookIn.indexOf(forWhat) != -1; };
+    var contains = function(lookIn, forWhat) { return lookIn.indexOf(forWhat) !== -1; };
     var userAgent = navigator.userAgent;
     var isWindows = contains(userAgent, 'Windows NT');
     var isMac = contains(userAgent, 'Macintosh');
@@ -167,7 +167,7 @@ var inpoot = {};
 
         var count = 0;
         for (var gpad in tempList) {
-            if(tempList[gpad] !== undefined && gpad != "length" && tempList.hasOwnProperty(gpad)){
+            if(tempList[gpad] !== undefined && gpad !== "length" && tempList.hasOwnProperty(gpad)){
                 count++;
 
                 //attach some details to the gamepad object
@@ -264,7 +264,7 @@ var inpoot = {};
         } else {
 
             text = getGamePadText(gpadType, 'axis_dual', refToAxisMap.bid);
-            var direction = refToAxisMap.subType == "y" ? (value <= 0 ? "down" : "up") : (value > 0 ? "right" : "left");
+            var direction = refToAxisMap.subType === "y" ? (value <= 0 ? "down" : "up") : (value > 0 ? "right" : "left");
 
             return {
                 text: text + ' ' + refToAxisMap.direction,
@@ -349,7 +349,7 @@ var inpoot = {};
                     var thisGMap = getGPadTypeMapping(rawDog.gpadType, 'axes', j);
                     var absValue = Math.abs(rawDog.axes[k]);
                     var threshValue = absValue > threshold ? absValue : 0;
-                    if(thisGMap.subType == 'x'){
+                    if(thisGMap.subType === 'x'){
                         if(rawDog.axes[k] <= 0){
                             CI['gamepad'][thisG.gamepadIndex].values[thisGMap.bid + 'left'] = threshValue;
                             CI['gamepad'][thisG.gamepadIndex].values[thisGMap.bid + 'right'] = 0;
@@ -433,7 +433,7 @@ var inpoot = {};
 
                 for(var k=0; k < theseInputs[j].inputs.length; k++){
 
-                    if(theseInputs[j].inputs[k].type == "keyboard") {
+                    if(theseInputs[j].inputs[k].type === "keyboard") {
 
                         if(CI['keyboard'][theseInputs[j].inputs[k].value] === undefined) {
                             CI['keyboard'][theseInputs[j].inputs[k].value] = 0;
@@ -451,16 +451,16 @@ var inpoot = {};
                             LI['keyboard'][theseInputs[j].inputs[k].value] = 0;
                         }
 
-                    } else if (theseInputs[j].inputs[k].type == "gamepad") {
+                    } else if (theseInputs[j].inputs[k].type === "gamepad") {
 
                         if (CI['gamepad'][thisPlayer.gamepadIndex] !== false && CI['gamepad'][thisPlayer.gamepadIndex] !== undefined) {
 
-                            if (theseInputs[j].inputs[k].buttonType == "axis_dual") {
+                            if (theseInputs[j].inputs[k].buttonType === "axis_dual") {
 
                                 //is this action inverted?
-                                if(thisPlayer.invert && thisPlayer.invert[theseInputs[j].inputs[k].value] && (theseInputs[j].inputs[k].direction == "up" || theseInputs[j].inputs[k].direction == "down")){
+                                if(thisPlayer.invert && thisPlayer.invert[theseInputs[j].inputs[k].value] && (theseInputs[j].inputs[k].direction === "up" || theseInputs[j].inputs[k].direction === "down")){
 
-                                    if(theseInputs[j].inputs[k].direction == "up"){
+                                    if(theseInputs[j].inputs[k].direction === "up"){
                                         currentVal = CI['gamepad'][thisPlayer.gamepadIndex].values[theseInputs[j].inputs[k].value + "down"];
                                         oldVal = LI['gamepad'][thisPlayer.gamepadIndex] ? LI['gamepad'][thisPlayer.gamepadIndex].values[theseInputs[j].inputs[k].value + "down"] : 0;
                                     } else {
@@ -499,24 +499,24 @@ var inpoot = {};
                             }
                         }
 
-                    } else if (theseInputs[j].inputs[k].type == "mouse") {
+                    } else if (theseInputs[j].inputs[k].type === "mouse") {
 
-                        if(theseInputs[j].inputs[k].value == "mouse_up"){
+                        if(theseInputs[j].inputs[k].value === "mouse_up"){
 
                             currentVal = CI['mouse']['mouseDY'] < 0 ? Math.min(Math.abs(CI['mouse']['mouseDY']) / mouseNormalizer,1) : 0;
                             oldVal = LI['mouse']['mouseDY'] < 0 ? Math.min(Math.abs(CI['mouse']['mouseDY']) / mouseNormalizer,1) : 0;
 
-                        } else if (theseInputs[j].inputs[k].value == "mouse_down") {
+                        } else if (theseInputs[j].inputs[k].value === "mouse_down") {
 
                             currentVal = CI['mouse']['mouseDY'] >= 0 ? Math.min(CI['mouse']['mouseDY'] / mouseNormalizer,1) : 0;
                             oldVal = LI['mouse']['mouseDY'] >= 0 ? Math.min(CI['mouse']['mouseDY'] / mouseNormalizer,1) : 0;
 
-                        } else if (theseInputs[j].inputs[k].value == "mouse_left") {
+                        } else if (theseInputs[j].inputs[k].value === "mouse_left") {
 
                             currentVal = CI['mouse']['mouseDX'] < 0 ? Math.min(Math.abs(CI['mouse']['mouseDX']) / mouseNormalizer,1) : 0;
                             oldVal = LI['mouse']['mouseDX'] < 0 ? Math.min(Math.abs(CI['mouse']['mouseDX']) / mouseNormalizer,1) : 0;
 
-                        } else if (theseInputs[j].inputs[k].value == "mouse_right") {
+                        } else if (theseInputs[j].inputs[k].value === "mouse_right") {
 
                             currentVal = CI['mouse']['mouseDX'] >= 0 ? Math.min(CI['mouse']['mouseDX'] / mouseNormalizer,1) : 0;
                             oldVal = LI['mouse']['mouseDX'] >= 0 ? Math.min(CI['mouse']['mouseDX'] / mouseNormalizer,1) : 0;
@@ -581,7 +581,7 @@ var inpoot = {};
     //If you have hardcoded the mappings for your users then call this or pass it in during initialization as "mappings"
     inpoot.setMappings = function (mappingInfo) {
 
-        if(typeof(mappingInfo) == 'string'){
+        if(typeof(mappingInfo) === 'string'){
             mappingInfo = JSON.parse(mappingInfo);
         }
 
@@ -602,7 +602,7 @@ var inpoot = {};
     //If you have hardcoded the player configs for your users then call this or pass it in during initialization as "players"
     inpoot.setPlayers = function (playerInfo) {
 
-        if(typeof(playerInfo) == 'string'){
+        if(typeof(playerInfo) === 'string'){
             playerInfo = JSON.parse(playerInfo);
         }
 
@@ -747,7 +747,7 @@ var inpoot = {};
 
             for(var i=0; i < allActionMappings.length; i++){
 
-                if(allActionMappings[i].id == actionMapId) {
+                if(allActionMappings[i].id === actionMapId) {
                     return allActionMappings[i];
                 }
             }
@@ -760,7 +760,7 @@ var inpoot = {};
 
         for(var i=0; i < allActionMappings.length; i++){
 
-            if(allActionMappings[i].id == actionMapId) {
+            if(allActionMappings[i].id === actionMapId) {
                 allActionMappings.splice(i,1);
                 $.storage.setObject('inpoot_action_mappings', allActionMappings);
             }
@@ -790,7 +790,7 @@ var inpoot = {};
             var allActionMappings = getAllActionMappings();
 
             for(var i=0; i < allActionMappings.length; i++) {
-                if(allActionMappings[i].id == actionMapId){
+                if(allActionMappings[i].id === actionMapId){
                     allActionMappings[i] = thisActionMap;
                     $.storage.setObject('inpoot_action_mappings', allActionMappings);
                 }
@@ -880,13 +880,13 @@ var inpoot = {};
                 var foundIndex = -1;
                 for(var i=0; i < allInputs.length; i++){
 
-                    if(allInputs[i].id == mapId){
+                    if(allInputs[i].id === mapId){
                         foundIndex = i;
                         break;
                     }
                 }
 
-                if(foundIndex != -1){
+                if(foundIndex !== -1){
 
                     //slice and save
                     allInputs.splice(foundIndex,1);
@@ -899,7 +899,7 @@ var inpoot = {};
             var getInputCombination = function (allInputs, mapId) {
 
                 for(var i=0; i < allInputs.length; i++){
-                    if(allInputs[i].id == mapId){
+                    if(allInputs[i].id === mapId){
                         return allInputs[i];
                     }
                 }
@@ -957,18 +957,18 @@ var inpoot = {};
                     var foundIndex = -1;
                     for(var i=0; i < allInputs.length; i++){
 
-                        if(allInputs[i].id == thisMapId){
+                        if(allInputs[i].id === thisMapId){
                             foundIndex = i;
                             break;
                         }
                     }
 
-                    if(foundIndex != -1){
+                    if(foundIndex !== -1){
 
                         var thisInputCombination = allInputs[foundIndex];
 
                         for(var j=0; j < thisInputCombination.inputs.length; j++){
-                            if(thisInputCombination.inputs[j].type == type && thisInputCombination.inputs[j].value == inputInfo.value){
+                            if(thisInputCombination.inputs[j].type === type && thisInputCombination.inputs[j].value === inputInfo.value){
                                 thisInputCombination.inputs.splice(j,1);
                                 saveActionMap();
                             }
@@ -978,7 +978,7 @@ var inpoot = {};
 
                 //display input
                 var displayInput = function (type, inputInfo) {
-                    var targetContainer = type == 'gamepad' ? gamepadList : (type == 'mouse' ? mouseList : keyboardList);
+                    var targetContainer = type === 'gamepad' ? gamepadList : (type === 'mouse' ? mouseList : keyboardList);
 
                     var inputPP = function (item) {
 
@@ -1038,7 +1038,7 @@ var inpoot = {};
                     //now look for new gamepad inputs (but only those that match this mappings gamepad type)
                     for(var gpad in CI['gamepad']) {
                         var thisPad = CI['gamepad'][gpad];
-                        if(thisPad.type == gpadType){
+                        if(thisPad.type === gpadType){
                             for(var padKey in thisPad.values){
                                 if (thisPad.values[padKey]) {
                                     inputsDown['gamepad'][padKey] = thisPad.values[padKey];
@@ -1060,7 +1060,7 @@ var inpoot = {};
                     oldInputsDown = $.extend(true, {}, inputsDown);
 
                     //lastly we look for keyboard inputs
-                    if(actionMap.keyboard && actionMap.keyboard != "false"){
+                    if(actionMap.keyboard && actionMap.keyboard !== "false"){
 
                         //Look for release of keyboard inputs first
                         for(key in inputsDown['keyboard']){
@@ -1088,7 +1088,7 @@ var inpoot = {};
                 }
 
                 //if we have a mouse wire up the mouse input button
-                if(actionMap.mouse && actionMap.mouse != "false"){
+                if(actionMap.mouse && actionMap.mouse !== "false"){
 
                     var gContainer = $('.dumbBox-content');
 
@@ -1120,7 +1120,7 @@ var inpoot = {};
                 }
 
                 //if we have a gamepad wire up the gamepad input button
-                if(actionMap.gamepad && actionMap.gamepad != "false"){
+                if(actionMap.gamepad && actionMap.gamepad !== "false"){
 
                     var mapGamepad = getGamepadConfigurations(actionMap.gamepad);
 
@@ -1189,13 +1189,13 @@ var inpoot = {};
 
                 //determine how many inputs we have
                 var inputCount = 0;
-                if(thisActionMap.keyboard && thisActionMap.keyboard != "false"){
+                if(thisActionMap.keyboard && thisActionMap.keyboard !== "false"){
                     inputCount++;
                 }
-                if(thisActionMap.mouse && thisActionMap.mouse != "false"){
+                if(thisActionMap.mouse && thisActionMap.mouse !== "false"){
                     inputCount++;
                 }
-                if(thisActionMap.gamepad && thisActionMap.gamepad != "false"){
+                if(thisActionMap.gamepad && thisActionMap.gamepad !== "false"){
                     inputCount++;
                 }
 
@@ -1370,7 +1370,7 @@ var inpoot = {};
         };
 
         //right away let's save away the "click to edit"
-        if(thisActionMap.extra == "click to edit") {
+        if(thisActionMap.extra === "click to edit") {
             thisActionMap.extra = "";
             saveActionMap();
         }
@@ -1534,11 +1534,11 @@ var inpoot = {};
                     var thisGMap = getGamepadMapping(gpad.gpadType);
 
                     //add it to the buttonToRaw mapping
-                    if(thisButton.type == 'button'){
+                    if(thisButton.type === 'button'){
                         thisGMap.buttonToRaw[button.type][thisButton.bid] = button.number;
-                    } else if (thisButton.type == 'axis_dual') {
+                    } else if (thisButton.type === 'axis_dual') {
 
-                        if(thisButton.style == "up" || thisButton.style == "down"){
+                        if(thisButton.style === "up" || thisButton.style === "down"){
                             thisGMap.buttonToRaw['axis_dual'][thisButton.bid].y = button.number;
                             thisGMap['rawToButton']['axesMap'][thisButton.bid + 'down'] = {bid:thisButton.bid, index:button.number, subType:'y', direction:'down'};
                             thisGMap['rawToButton']['axesMap'][thisButton.bid + 'up'] = {bid:thisButton.bid, index:button.number, subType:'y', direction:'up'};
@@ -1551,10 +1551,10 @@ var inpoot = {};
 
                     //and also add it to the rawToButton mapping
                     var subType = false;
-                    var rawType = button.type == "button" ? "buttons" : "axes";
-                    if(thisButton.style == "up" || thisButton.style == "down") {
+                    var rawType = button.type === "button" ? "buttons" : "axes";
+                    if(thisButton.style === "up" || thisButton.style === "down") {
                         subType = 'y';
-                    } else if (thisButton.style == "left" || thisButton.style == "right") {
+                    } else if (thisButton.style === "left" || thisButton.style === "right") {
                         subType = 'x';
                     }
 
@@ -1594,7 +1594,7 @@ var inpoot = {};
             var gamepads = getGamePads();
             var gamepadsToCheck = [];
             for(var i=0; i < gamepads.length; i++){
-                if (gamepads[i].gamepad.gpadType == gpad.gpadType) {
+                if (gamepads[i].gamepad.gpadType === gpad.gpadType) {
                     gamepadsToCheck.push(gamepads[i]);
                 }
             }
@@ -1671,7 +1671,7 @@ var inpoot = {};
 
                     $('.pressed').removeClass('pressed');
 
-                    var rawType = button.type == "button" ? "buttons" : "axes";
+                    var rawType = button.type === "button" ? "buttons" : "axes";
                     var bMap = gpadMap['rawToButton'][rawType][button.number];
                     if(bMap === undefined){
                         console.log(gpadMap['rawToButton'], gpadMap['rawToButton'][rawType], rawType, button.number);
@@ -1680,9 +1680,9 @@ var inpoot = {};
 
                     if(bMap && bMap.subType){
 
-                        if (bMap.subType == "y") {
+                        if (bMap.subType === "y") {
                             additionalStyle = button.value > 0 ? "down" : "up";
-                        } else if (bMap.subType == "x") {
+                        } else if (bMap.subType === "x") {
                             additionalStyle = button.value > 0 ? "right" : "left";
                         }
                     }
@@ -1709,7 +1709,7 @@ var inpoot = {};
 
             var thisPad;
             for(var i=0; i < gamepads.length; i++){
-                if(gamepads[i].gamepad.gpadType == gpad.gpadType){
+                if(gamepads[i].gamepad.gpadType === gpad.gpadType){
                     thisPad = gamepads[i];
                     continue;
                 }
@@ -1760,7 +1760,7 @@ var inpoot = {};
 
 
             //figure out which config set to load
-            var padConfigs = inpoot.gamepads[gpad.gpadType];
+            padConfigs = inpoot.gamepads[gpad.gpadType];
 
             //when the user clicks all we need to setup button mapping for all keys
             $('.inpoot-gamepad-calibrate-panel-button.all').click(function(){
@@ -1804,7 +1804,7 @@ var inpoot = {};
 
                     stopMapping();
 
-                    if (btype != 'axis_dual') {
+                    if (btype !== 'axis_dual') {
                         mapButtons([{type: btype,bid: button}]);
                     } else {
                         mapButtons([
@@ -1901,7 +1901,7 @@ var inpoot = {};
 
                 var found = false;
                 for(var j=0; j < newList.length; j++){
-                    if(newList[j].id == gamepads[idx].gamepad.id){
+                    if(newList[j].id === gamepads[idx].gamepad.id){
                         newList[j].active = true;
                         found = true;
                     }
@@ -1925,7 +1925,7 @@ var inpoot = {};
 
             var refresh = false;
 
-            if(newList.length != oldList.length){
+            if(newList.length !== oldList.length){
                 refresh = true;
             }
 
@@ -1935,15 +1935,15 @@ var inpoot = {};
 
                 for(var n=0; n < newList.length; n++){
                     for(var p=0; p < oldList.length; p++){
-                         if(oldList[p].id == newList[n].id){
-                             if(oldList[p].active == newList[n].active){
+                         if(oldList[p].id === newList[n].id){
+                             if(oldList[p].active === newList[n].active){
                                  matches++;
                              }
                          }
                     }
                 }
 
-                if(matches != newList.length){
+                if(matches !== newList.length){
                     refresh = true;
                 }
             }
@@ -2000,13 +2000,13 @@ var inpoot = {};
 
             //search through them for our expected number
             for (var j = 0; j < storedPlayers.length; j++) {
-                if (storedPlayers[j].number == playerNum) {
+                if (storedPlayers[j].number === playerNum) {
                     foundIndex = j;
                 }
             }
 
             //they should be found so save over
-            if(foundIndex != -1){
+            if(foundIndex !== -1){
                 storedPlayers[foundIndex] = playerObj;
 
                 //and save all
@@ -2036,7 +2036,7 @@ var inpoot = {};
 
             for(var player in allPlayers){
 
-                if(allPlayers[player].number == playerObj.number){
+                if(allPlayers[player].number === playerObj.number){
                     allPlayers[player] = playerObj;
                     savePlayers(allPlayers);
                     return;
@@ -2059,13 +2059,13 @@ var inpoot = {};
 
                 //we push them in in player order
                 for (var j = 0; j < storedPlayers.length; j++) {
-                    if (storedPlayers[j].number == i + 1) {
+                    if (storedPlayers[j].number === i + 1) {
                         foundIndex = j;
                     }
                 }
 
                 //if we already have one stored then use it
-                if(foundIndex != -1){
+                if(foundIndex !== -1){
 
                     //update action map info (it could have changed)
                     var playerActionMap = getActionMapById(storedPlayers[foundIndex].actionMapId);
@@ -2162,7 +2162,7 @@ var inpoot = {};
 
                 //set the first value for the gamepad index
                 var gpadList = getRawPads();
-                if(item.data.options.gpadIndex !== false && gpadList[item.data.options.gpadIndex] && gpadList[item.data.options.gpadIndex].gpadType == item.data.gamepad){
+                if(item.data.options.gpadIndex !== false && gpadList[item.data.options.gpadIndex] && gpadList[item.data.options.gpadIndex].gpadType === item.data.gamepad){
                     uiNode.find('.inpoot-player-gamepad-index').html('Gamepad Slot ' + (parseInt(item.data.options.gpadIndex, 10) + 1));
                 } else {
 
@@ -2185,7 +2185,7 @@ var inpoot = {};
 
                     if(gpadList[i]){
 
-                        var disabled = item.data.gamepad != gpadList[i].gpadType;
+                        var disabled = item.data.gamepad !== gpadList[i].gpadType;
 
                         if(!disabled){
                             hasOne = true;
@@ -2227,7 +2227,7 @@ var inpoot = {};
                 var optionSets = 0;
 
                 //Do we need to allow the user to invert their axis?
-                if(item.data.gamepad && item.data.gamepad != "false"){
+                if(item.data.gamepad && item.data.gamepad !== "false"){
 
                     var axisList = getGamePadAxes(item.data.gamepad);
 
@@ -2303,7 +2303,7 @@ var inpoot = {};
         var oldLength = getGamePads().length;
         var checkForGamePadUpdates = function () {
             var gList = getGamePads();
-            if (gList.length != oldLength) {
+            if (gList.length !== oldLength) {
                 oldLength = gList.length;
                 drawPlayers();
                 $('.inpoot-option-box-wrapper').remove();
@@ -2424,7 +2424,7 @@ var inpoot = {};
 
             //check for selected
             for(var i = 0 ; i < that.options.length; i++){
-                if(that.options[i].value == options_in.selected){
+                if(that.options[i].value === options_in.selected){
                     selected = that.options[i];
                 }
             }
@@ -2446,7 +2446,7 @@ var inpoot = {};
 
                 //check for selected
                 for(var i = 0 ; i < that.options.length; i++){
-                    if(that.options[i].value == val){
+                    if(that.options[i].value === val){
                         selected = that.options[i];
                     }
                 }
@@ -2479,17 +2479,17 @@ var inpoot = {};
 
                         var matchingOpt;
                         for (var j = 0; j < that.options.length; j++) {
-                            if (that.options[j].value == chosenOpt.value) {
+                            if (that.options[j].value === chosenOpt.value) {
                                 matchingOpt = that.options[j];
                                 break;
                             }
                         }
 
                         //If the current value is not in the ifNot list then don't do a confirm
-                        var notInIfNotList = (chosenOpt.ifNot && chosenOpt.ifNot.indexOf(selected.value) != -1);
+                        var notInIfNotList = (chosenOpt.ifNot && chosenOpt.ifNot.indexOf(selected.value) !== -1);
 
                         //there is a warning we need to stop and confirm
-                        if (matchingOpt.message && chosenOpt.value != selected.value && !notInIfNotList) {
+                        if (matchingOpt.message && chosenOpt.value !== selected.value && !notInIfNotList) {
 
                             selectBox = inpoot.utils.optionBox({
                                 title:  matchingOpt.message,
@@ -2502,7 +2502,7 @@ var inpoot = {};
                                     value: 'okay'
                                 }],
                                 callBack: function(cOpt){
-                                    if (cOpt.value == "okay") {
+                                    if (cOpt.value === "okay") {
 
                                         doCallBack();
 
@@ -2664,7 +2664,7 @@ var inpoot = {};
 
                 if (thisPoll) {
 
-                    if (thisPoll.type == "timeout") {
+                    if (thisPoll.type === "timeout") {
                         clearTimeout(thisPoll.pollObj);
                     }
                     else {
@@ -2677,7 +2677,7 @@ var inpoot = {};
             purge: function () {
                 for(var poll in this.repository){
                     var thisPoll = this.repository[poll];
-                    if(thisPoll.type == "timeout"){
+                    if(thisPoll.type === "timeout"){
                         clearTimeout(thisPoll.pollObj);
                     } else {
                         clearInterval(thisPoll.pollObj);
@@ -3137,14 +3137,14 @@ var inpoot = {};
 
             //when focussed select all text
             that.focus(function(){
-               if($(this).val() == options.defaultText){
+               if($(this).val() === options.defaultText){
                     $(this).val('');
                }
             });
 
             //add behavior to the edit name when the user hits escape or enter
             that.keyup(function(e){
-                if(e.which == 13 || e.which == 27){
+                if(e.which === 13 || e.which === 27){
                     $(this).blur();
                 }
             });
@@ -3191,9 +3191,9 @@ if (!Array.prototype.indexOf) {
         var n = 0;
         if (arguments.length > 0) {
             n = Number(arguments[1]);
-            if (n != n) { // shortcut for verifying if it's NaN
+            if (n !== n) { // shortcut for verifying if it's NaN
                 n = 0;
-            } else if (n !== 0 && n != Infinity && n != -Infinity) {
+            } else if (n !== 0 && n !== Infinity && n !== -Infinity) {
                 n = (n > 0 || -1) * Math.floor(Math.abs(n));
             }
         }
