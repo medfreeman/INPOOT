@@ -4,27 +4,8 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     pkg: '<json:package.json>',
-    meta: {
-      banner: '/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - ' +
-        '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
-        '<%= pkg.homepage ? "* " + pkg.homepage + "\n" : "" %>' +
-        '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
-        ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */'
-    },
-    concat: {
-      dist: {
-        src: ['<banner:meta.banner>', '<file_strip_banner:inpoot.js>', 'lib/resources/*.js' ],
-        dest: 'dist/<%= pkg.name %>-<%= pkg.version %>.js'
-      }
-    },
-    min: {
-      dist: {
-        src: ['<banner:meta.banner>', '<config:concat.dist.dest>'],
-        dest: 'dist/<%= pkg.name %>-<%= pkg.version %>.min.js'
-      }
-    },
     jshint: {
-	  files: ['lib/resources/*.js', 'inpoot.js'],
+	  files: ['inpoot.js', 'lib/resources/*.js'],
       options: {
         curly: true,
         eqeqeq: true,
@@ -42,10 +23,24 @@ module.exports = function(grunt) {
         jQuery: true
       }
     },
+    concat: {
+      dist: {
+        src: ['inpoot.js', 'lib/resources/*.js' ],
+        dest: 'dist/<%= pkg.name %>-<%= pkg.version %>.js'
+      }
+    },
     uglify: {
+		options: {
+		  // the banner is inserted at the top of the output
+		  banner: '/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - ' +
+          '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
+          '<%= pkg.homepage ? "* " + pkg.homepage + "\n" : "" %>' +
+          '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
+          ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */'
+	    },
 		dist: {
            files: {
-             'dist/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
+             'dist/<%= pkg.name %>-<%= pkg.version %>.min.js': ['<%= concat.dist.dest %>']
            }
         }
     }
