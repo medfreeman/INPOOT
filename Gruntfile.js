@@ -18,10 +18,12 @@ module.exports = function(grunt) {
         boss: true,
         eqnull: true,
         browser: true
-      },
-      globals: {
-        jQuery: true
       }
+    },
+    clean: {
+      dirs: [
+        'dist',
+      ]
     },
     concat: {
       dist: {
@@ -45,11 +47,21 @@ module.exports = function(grunt) {
         }
     }
   });
-
+  
+  // Defining a custom task to delete previously generated file before generate them
+  grunt.registerTask('clean', 'Clean the previously generated files', function() {
+    var dirs = grunt.config('clean').dirs;
+ 
+    for (var i = 0; i < dirs.length; i++) {
+      grunt.file.delete(dirs[i]);
+      grunt.file.mkdir(dirs[i]);
+    }
+  });
+  
   // Default task.
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.registerTask('default', ['jshint', 'concat', 'uglify']);
+  grunt.registerTask('default', ['jshint', 'clean', 'concat', 'uglify']);
 
 };
