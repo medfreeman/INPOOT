@@ -11,11 +11,6 @@ module.exports = function(grunt) {
         '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
         ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */'
     },
-    lint: {
-      all: ['lib/resources/*.js', 'inpoot.js'],
-      res: ['lib/resources/*.js'],
-      main: ['inpoot.js']
-    },
     concat: {
       dist: {
         src: ['<banner:meta.banner>', '<file_strip_banner:inpoot.js>', 'lib/resources/*.js' ],
@@ -29,6 +24,7 @@ module.exports = function(grunt) {
       }
     },
     jshint: {
+	  files: ['lib/resources/*.js', 'inpoot.js'],
       options: {
         curly: true,
         eqeqeq: true,
@@ -37,7 +33,7 @@ module.exports = function(grunt) {
         newcap: true,
         noarg: true,
         sub: true,
-        undef: true,
+        undef: false,
         boss: true,
         eqnull: true,
         browser: true
@@ -46,10 +42,19 @@ module.exports = function(grunt) {
         jQuery: true
       }
     },
-    uglify: {}
+    uglify: {
+		dist: {
+           files: {
+             'dist/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
+           }
+        }
+    }
   });
 
   // Default task.
-  grunt.registerTask('default', 'lint qunit concat min');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.registerTask('default', ['jshint', 'concat', 'uglify']);
 
 };

@@ -1,14 +1,21 @@
 {
   "name": "INPOOT",
-  "version": "0.9.1b",
+  "version": "0.9.2b",
   "description": "Wrap gamepad, keyboard, and mouse inputs for browsers.",
   "homepage": "http://johndavidfive.com/inpoot",
   "repository": {
     "type": "git",
-    "url": "git://github.com/gitsome/INPOOT.git"
+    "url": "https://github.com/medfreeman/INPOOT.git"
   },
   "dependencies": {
     "jquery": ">= 1.7.1"
+  },
+  "devDependencies": {
+    "grunt": "0.4.x",
+    "grunt-cli": "0.1.x",
+    "grunt-contrib-concat": "0.3.x",
+    "grunt-contrib-jshint": "0.6.x",
+    "grunt-contrib-uglify": "0.2.x"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -23,7 +30,7 @@
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/gitsome/INPOOT/blob/master/README.md"
+      "url": "https://github.com/medfreeman/INPOOT/raw/master/README.md"
     }
   ],
   "author": {
