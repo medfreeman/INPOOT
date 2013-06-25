@@ -2709,7 +2709,7 @@ var inpoot = {};
 
 
     //========================================================================================================
-    //                                 JQUERY TMPL TEMPLATES FOR EACH VIEW
+    //                                 $ TMPL TEMPLATES FOR EACH VIEW
     //========================================================================================================
 
 
@@ -3084,15 +3084,15 @@ var inpoot = {};
     ].join(''));
 
 
-})(jQuery);
+})($);
 
 
     //========================================================================================================
-    //                          ADDITIONAL JQUERY UTILITIES AND PROTOTYPE ENHANCMENTS
+    //                          ADDITIONAL $ UTILITIES AND PROTOTYPE ENHANCMENTS
     //========================================================================================================
 
 
-// simple local storage helper for jquery
+// simple local storage helper for $
 // author: Ben Sparks : http://superiorcode.com/
 (function($) {
 
@@ -3112,7 +3112,7 @@ var inpoot = {};
         return value && JSON.parse(value);
     };
 
-}(jQuery));
+}($));
 
 //nice little click to edit on an input
 (function($) {
@@ -3161,7 +3161,7 @@ var inpoot = {};
         }
     };
 
-    //Standard jQuery plugin call
+    //Standard $ plugin call
     $.fn.inpootEdit = function(incoming) {
 
         if(this.length === 0) {return;}
@@ -3174,7 +3174,7 @@ var inpoot = {};
         }
     };
 
-}(jQuery));
+}($));
 
 //if we don't have indexOf for arrays add it
 if (!Array.prototype.indexOf) {
