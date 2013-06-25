@@ -2780,7 +2780,7 @@ var inpoot = {};
     ].join(''));
 
      $.template('inpoot.action_map.action_list_item', [
-        '<div class="inpoot-edit-action-map-list-group-action">{{if (actionId != descr && descr != undefined) }} ${inpoot.utils.truncate(descr, 22)} {{else}} ${inpoot.utils.truncate(actionId, 22)} {{/if}}<span class="inpoot-selected-arrow"></span></div>'
+        '<div class="inpoot-edit-action-map-list-group-action">{%if (actionId != descr && descr != undefined) %} ${inpoot.utils.truncate(descr, 22)} {%else%} ${inpoot.utils.truncate(actionId, 22)} {%/if%}<span class="inpoot-selected-arrow"></span></div>'
      ].join(''));
 
     $.template('inpoot.action_map.action_list_mappings', [
@@ -2791,25 +2791,25 @@ var inpoot = {};
 
     $.template('inpoot.action_map.action_edit_mapping', [
         '<div class="inpoot-edit-action-map-edit_mapping input-count-${inputCount}">',
-            '{{if (actionMap.keyboard && actionMap.keyboard != "false")}}',
+            '{%if (actionMap.keyboard && actionMap.keyboard != "false")%}',
                 '<div class="inpoot-edit-mapping-gather-inputs keyboard">',
                     '<div class="inpoot-edit-mapping-gather-title inpoot-input-icon-xsmall-container"><span class="inpoot-input-icon-xsmall"></span>KEYBOARD  <span class="inpoot-gather-add-button">PRESS KEYS</span></div>',
                     '<div class="inpoot-edit-mapping-gather-input-list">',
                     '</div>',
                 '</div>',
-            '{{/if}}',
-            '{{if (actionMap.gamepad && actionMap.gamepad != "false")}}',
+            '{%/if%}',
+            '{%if (actionMap.gamepad && actionMap.gamepad != "false")%}',
                 '<div class="inpoot-edit-mapping-gather-inputs gamepad">',
                     '<div class="inpoot-edit-mapping-gather-title inpoot-input-icon-xsmall-container"><span class="inpoot-input-icon-xsmall"></span>GAMEPAD <span class="inpoot-gather-add-button active">CLICK -or- PRESS BUTTONS</span></div>',
                     '<div class="inpoot-edit-mapping-gather-input-list"></div>',
                 '</div>',
-            '{{/if}}',
-            '{{if (actionMap.mouse && actionMap.mouse != "false")}}',
+            '{%/if%}',
+            '{%if (actionMap.mouse && actionMap.mouse != "false")%}',
                 '<div class="inpoot-edit-mapping-gather-inputs mouse">',
                     '<div class="inpoot-edit-mapping-gather-title inpoot-input-icon-xsmall-container"><span class="inpoot-input-icon-xsmall"></span>MOUSE <span class="inpoot-gather-add-button active">CLICK to add mouse input</span></div>',
                     '<div class="inpoot-edit-mapping-gather-input-list"></div>',
                 '</div>',
-            '{{/if}}',
+            '{%/if%}',
         '</div>'
     ].join(''));
 
@@ -2819,7 +2819,7 @@ var inpoot = {};
 
     $.template('inpoot.action_map.action_edit_action_inputs', [
         '<div>',
-            '<div class="inpoot-edit-action-top"><span class="inpoot-edit-action-title">${descr}</span> {{if actionId != descr}}<span class="inpoot-edit-action-title-actionid"> : ${actionId} </span>{{/if}}</div>',
+            '<div class="inpoot-edit-action-top"><span class="inpoot-edit-action-title">${descr}</span> {%if actionId != descr%}<span class="inpoot-edit-action-title-actionid"> : ${actionId} </span>{%/if%}</div>',
             '<div class="inpoot-main-gamepad-edit-action-options"> [+] New Input Combination </div>',
             '<div class="inpoot-main-gamepad-edit-action-options-list"></div>',
         '</div>'
@@ -2829,11 +2829,11 @@ var inpoot = {};
         '<div class="inpoot-edit-action-keys">',
             '<div class="inpoot-x-out"></div>',
             '<div class="inpoot-edit-action-keys-list">',
-                '{{if inputs.length == 0}}',
+                '{%if inputs.length == 0%}',
                     '<span class="inpoot-edit-action-keys-list-and edit">(click to edit)</span> ',
-                '{{else}}',
-                    '{{tmpl(inputs) "inpoot.action_map.action_edit_action_input_listing"}}',
-                '{{/if}}',
+                '{%else%}',
+                    '{%tmpl(inputs) "inpoot.action_map.action_edit_action_input_listing"%}',
+                '{%/if%}',
             '</div>',
         '</div>'
     ].join(''));
@@ -2845,7 +2845,7 @@ var inpoot = {};
     $.template('inpoot.action_map.action_edit_action_input_hidden', [
         '<div class="inpoot-edit-action-keys hide-action-inputs">',
             '<div class="inpoot-x-out"></div>',
-            '<div class="inpoot-edit-action-keys-list">{{if inputs.length == 0}} <span class="inpoot-edit-action-keys-list-and edit">(click to edit)</span> {{else}} yo {{/if}}</div>',
+            '<div class="inpoot-edit-action-keys-list">{%if inputs.length == 0%} <span class="inpoot-edit-action-keys-list-and edit">(click to edit)</span> {%else%} yo {%/if%}</div>',
         '</div>'
     ].join(''));
 
@@ -2872,22 +2872,22 @@ var inpoot = {};
         '<div class="inpoot-mapping-item">',
             '<span class="inpoot-mapping-item-left">',
                 '<span class="inpoot-mapping-item-delete">&nbsp;</span>',
-                '<span class="inpoot-mapping-item-name">${name} <span class="inpoot-parens">{{if extra}}(${extra}){{/if}}</span></span>',
+                '<span class="inpoot-mapping-item-name">${name} <span class="inpoot-parens">{%if extra%}(${extra}){%/if%}</span></span>',
             '</span>',
             '<span class="inpoot-mapping-item-delete-confirm">',
                 '<span class="inpoot-mapping-item-delete-confirm-okay inpoot-mapping-item-delete-confirm-button">Delete</span>',
                 '<span class="inpoot-mapping-item-delete-confirm-cancel inpoot-mapping-item-delete-confirm-button">Cancel</span>',
             '</span>',
             '<span class="inpoot-mapping-item-inputs">',
-                '{{if keyboard && keyboard != "false"}}',
+                '{%if keyboard && keyboard != "false"%}',
                     '<span class="inpoot-mapping-item-inputs-input keyboard">&nbsp;</span>',
-                '{{/if}}',
-                '{{if gamepad && gamepad != "false"}}',
+                '{%/if%}',
+                '{%if gamepad && gamepad != "false"%}',
                     '<span class="inpoot-mapping-item-inputs-input gamepad">&nbsp;</span>',
-                '{{/if}}',
-                '{{if mouse && mouse != "false"}}',
+                '{%/if%}',
+                '{%if mouse && mouse != "false"%}',
                     '<span class="inpoot-mapping-item-inputs-input mouse">&nbsp;</span>',
-                '{{/if}}',
+                '{%/if%}',
             '</span>',
         '</div>'
     ].join(''));
@@ -2958,14 +2958,14 @@ var inpoot = {};
         '<div class="inpoot-main-gamepad-options-message">',
             'Hold down keys on your gamepad to load / calibrate gamepads',
         '</div>',
-        '{{if gamepads}}',
-            '{{tmpl(gamepads, {rendered:gamepadPP}) "inpoot.gamepad-gamepad-indy"}}',
-        '{{/if}}'
+        '{%if gamepads%}',
+            '{%tmpl(gamepads, {rendered:gamepadPP}) "inpoot.gamepad-gamepad-indy"%}',
+        '{%/if%}'
     ].join(''));
 
     //gamepad
     $.template('inpoot.gamepad-gamepad-indy',[
-        '<div class="inpoot-main-gamepad-option {{if active}}active{{/if}}">',
+        '<div class="inpoot-main-gamepad-option {%if active%}active{%/if%}">',
            '<span class="inpoot-gamepad-option-left">',
                 '<span class="inpoot-input-icon gamepad"></span>',
            '</span>',
@@ -2973,11 +2973,11 @@ var inpoot = {};
                 '${displayName}',
                 '</br>',
                 '<span class="inpoot-gamepad-option-subinfo">',
-                    '{{if active}}',
+                    '{%if active%}',
                         'Click to calibrate this type of gamepad',
-                    '{{else}}',
+                    '{%else%}',
                         'To calibrate, ensure your gamepad is on. Hit keys to activate it.',
-                    '{{/if}}',
+                    '{%/if%}',
                  '</span>',
            '</span>',
            '<span class="inpoot-status-bar"></span>',
@@ -3016,26 +3016,26 @@ var inpoot = {};
                         'options',
                     '</span>',
                     '<span class="inpoot-player-actionmap inpoot-gather-add-button active">',
-                        '{{if title}}',
+                        '{%if title%}',
                             '<span class="inpoot-player-actionmap-title">${title}</span>',
                             '<span class="inpoot-player-input-types">',
-                                '{{if keyboard && keyboard != "false"}}',
+                                '{%if keyboard && keyboard != "false"%}',
                                     '<span class="keyboard"><span class="inpoot-input-icon-xsmall"></span></span>',
-                                '{{/if}}',
-                                '{{if mouse && mouse != "false"}}',
+                                '{%/if%}',
+                                '{%if mouse && mouse != "false"%}',
                                     '<span class="mouse"><span class="inpoot-input-icon-xsmall"></span></span>',
-                                '{{/if}}',
-                                '{{if gamepad && gamepad != "false"}}',
+                                '{%/if%}',
+                                '{%if gamepad && gamepad != "false"%}',
                                     '<span class="gamepad"><span class="inpoot-input-icon-xsmall"></span></span>',
-                                '{{/if}}',
+                                '{%/if%}',
                             '</span>',
-                        '{{else}}',
+                        '{%else%}',
                             '( click to set action mapping )',
-                        '{{/if}}',
+                        '{%/if%}',
                     '</span>',
-                    '{{if gamepad && gamepad != "false"}}',
+                    '{%if gamepad && gamepad != "false"%}',
                         '<span class="inpoot-player-options-button inpoot-gather-add-button active inpoot-player-gamepad-index">gpad</span>',
-                    '{{/if}}',
+                    '{%/if%}',
                 '</div>',
             '</div>',
             '<div class="inpoot-player-options"></div>',
@@ -3047,11 +3047,11 @@ var inpoot = {};
         '<span class="inpoot-player-invert-axis inverted-${axisInverted}">',
             '<span class="inpoot-player-invert-axis-name">${axisTitle}</span>',
             '<span class="inpoot-player-invert-axis-value">',
-                '{{if axisInverted}}',
+                '{%if axisInverted%}',
                     'INVERTED',
-                 '{{else}}',
+                 '{%else%}',
                     'NORMAL',
-                 '{{/if}}',
+                 '{%/if%}',
             '</span>',
         '</span>'
     ].join(''));
