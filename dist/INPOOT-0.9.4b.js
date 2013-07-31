@@ -3104,7 +3104,9 @@ var inpoot = {};
 
     Storage.prototype.getObject = function(key) {
         var value = this.getItem(key);
-        return value && JSON.parse(value);
+        value = value && JSON.parse(value);
+        value = value ? value : [];
+        return value;
     };
 
     Storage.prototype.removeObject = function(key) {
